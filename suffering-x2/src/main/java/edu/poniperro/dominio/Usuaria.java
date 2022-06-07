@@ -42,6 +42,8 @@ public class Usuaria extends PanacheEntityBase {
         this.destreza = destreza;
     }
 
-
+    public String toString() {
+		return "nombre: " + getNombre() + " destreza: " + getDestreza();
+	};
 
 }
