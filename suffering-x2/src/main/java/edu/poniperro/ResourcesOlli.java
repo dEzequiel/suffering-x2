@@ -16,7 +16,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
+import edu.poniperro.dominio.Item;
 import edu.poniperro.dominio.Orden;
 import edu.poniperro.dominio.Usuaria;
 
@@ -63,6 +63,19 @@ public class ResourcesOlli {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Orden> getPedidos(@PathParam("usuaria") String nombre) {
         return service.cargaOrden(nombre);
+    }
+
+    @Path("/item/{nombre}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getItem(@PathParam("nombre") String nombre) {
+        Optional<Item> oItem = Item.findByIdOptional(nombre);
+
+        if(oItem.isPresent()) {
+            return Response.status(Response.Status.OK).entity(service.cargaItem(oItem.get().getNombre())).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
 }
